@@ -1,0 +1,109 @@
+# README
+
+## Google Maps 评论爬取工具
+
+此项目旨在为提供在CSV文件中的商家列表爬取Google Maps评论。爬虫提取评论详情，包括评论内容、星级、评论时间、回复内容和回复时间，并将数据保存到每个商家的单独CSV文件中。
+
+### 前提条件
+
+在运行脚本之前，请确保已安装以下内容：
+
+1. Python 3.x
+2. Selenium
+3. BeautifulSoup4
+4. pandas
+5. ChromeDriver（与已安装的Chrome版本兼容）
+
+### 安装
+
+1. **安装Python包:**
+
+    ```sh
+    pip install selenium beautifulsoup4 pandas
+    ```
+
+2. **下载ChromeDriver:**
+   - 访问 [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) 下载与您的Chrome浏览器兼容的版本。
+   - 解压下载的文件并放置在已知目录（例如：`E:/chrome driver/chromedriver.exe`）。
+
+### 使用方法
+
+1. **准备CSV文件:**
+   - CSV文件应包含 `Name`，`Address` 和 `Postcode` 列。
+   - 将CSV文件放在指定路径（`C:/Users/ASUS/Desktop/24_July_2024_CQC_directory.csv`）。
+
+2. **配置脚本:**
+   - 确保脚本中的 `chromedriver_path` 与您的ChromeDriver位置匹配。
+   - 确保脚本中的 `file_path` 与您的CSV文件位置匹配。
+
+3. **运行脚本:**
+   - 使用Python执行脚本：
+
+    ```sh
+    python D:/data/PythonApplication1/PythonApplication1.py
+    ```
+
+### 脚本说明
+
+脚本执行以下步骤：
+
+1. **设置:**
+   - 配置ChromeDriver并最大化窗口。
+
+2. **读取CSV文件:**
+   - 使用pandas加载包含商家详情的CSV文件。
+
+3. **爬取函数 (`scrape_google_maps_reviews`):**
+   - 导航到Google Maps。
+   - 使用名称、地址和邮编搜索商家。
+   - 点击“评论”按钮。
+   - 滚动评论面板以加载所有评论。
+   - 点击“查看更多”按钮以展开完整评论和回复。
+   - 使用BeautifulSoup提取评论详情（文本、星级、时间、回复内容、回复时间）。
+
+4. **处理每个商家:**
+   - 遍历CSV文件中的每一行。
+   - 对每个商家调用爬取函数。
+   - 将提取的评论详情保存到以商家名称和地址命名的CSV文件中。
+
+5. **保存数据:**
+   - 将每个商家的评论保存到指定输出目录（`C:/Users/ASUS/Desktop/`）的单独CSV文件中。
+
+6. **关闭浏览器:**
+   - 爬取和保存所有评论后关闭Chrome浏览器。
+
+### 示例输出
+
+对于每个商家，将生成包含以下列的CSV文件：
+- `Name`
+- `Address`
+- `Postcode`
+- `Review`
+- `Rating`
+- `Review Time`
+- `Reply`
+- `Reply Time`
+
+每个文件将命名为 `business_name_address.csv`，其中名称和地址中的空格和斜杠将替换为下划线。
+
+### 故障排除
+
+1. **ChromeDriver路径无效:**
+   - 确保脚本中的 `chromedriver_path` 与ChromeDriver的安装位置匹配。
+   - 确保路径使用正斜杠（`/`）或双反斜杠（`\\`）。
+
+2. **模块未找到:**
+   - 确保使用 `pip install selenium beautifulsoup4 pandas` 安装了所有必需的Python包。
+
+3. **Chrome浏览器版本兼容性:**
+   - 确保ChromeDriver版本与已安装的Chrome浏览器版本匹配。
+
+4. **超时错误:**
+   - 如果由于页面加载缓慢而遇到超时错误，请增加 `time.sleep()` 的持续时间。
+
+### 注意事项
+
+- 此脚本设计为适用于脚本创建日期的Google Maps特定结构。Google可能会更新其页面结构，可能需要更新脚本。
+- 确保在爬取数据时遵守Google的服务条款。
+
+如需根据您的具体需求修改脚本。如果遇到任何问题或有疑问，请参考脚本内注释中提供的文档链接。
